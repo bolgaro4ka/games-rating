@@ -1,0 +1,23 @@
+{
+  "name": "games",
+  "version": "1.0.0",
+  "description": "Это стартовый архив для второй проектной работы по бэкенду.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bolgaro4ka/games-rating.git"
+  },
+  "author": "bolgaro4ka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bolgaro4ka/games-rating/issues"
+  },
+  "homepage": "https://github.com/bolgaro4ka/games-rating#readme",
+  "dependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
