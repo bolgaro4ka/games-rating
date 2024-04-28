@@ -1,146 +1,72 @@
-const fetchGames = async url => {
+const getData = async (url) => {
   try {
-    const games = await fetch(url);
-    return games.json();
-  } catch (error) {
-    console.log(error);
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error(err);
   }
-};
+}
 
-const showPlaceholder = (selector, message) => {
-  const placeholder = document.createElement("li");
-  placeholder.classList.add("placeholder");
-  placeholder.textContent = message;
-  document.querySelector(selector).append(placeholder);
-};
-
-const removePlaceholder = selector => {
-  const placeholder = document.querySelector(selector);
-  if (placeholder) {
-    placeholder.remove();
-  }
-};
-
-const buildCard = (object, template) => {
-  const node = template.content.cloneNode(true);
-  node.querySelector("a").href = object.link;
-  node.querySelector("img").src = object.image;
-  node.querySelector("h2").textContent = object.title;
-  node.querySelector("p").textContent = object.description;
-  return node;
-};
-
-const createListItem = (parent, item, template) => {
-  const li = document.createElement("li");
-  li.id = `game-${item.id}`;
-  const deleteButton = document.createElement("button");
-  deleteButton.textContent = "Удалить";
-  deleteButton.classList.add("delete-game__button");
-  li.append(buildCard(item, template));
-  li.append(deleteButton);
-  parent.prepend(li);
-  submitDelete(li);
-};
-
-const createGamesListItems = (listSelector, template, array) => {
-  const ul = document.querySelector(listSelector);
-  array.forEach(item => {
-    createListItem(ul, item, template);
-  });
-};
-
-fetchGames("/games").then(data => {
-  if (!data || !data.length) {
-    showPlaceholder(".games-list", "Нет игр в базе данных. Добавьте игру.");
-    return;
-  } else {
-    createGamesListItems(
-      ".games-list",
-      document.querySelector("#game-card"),
-      data
-    );
-  }
-});
-
-document.querySelector(".add-game__button").addEventListener("click", () => {
-  document.querySelector("#form-dialog").showModal();
-});
-
-document.querySelector(".close-dialog").addEventListener("click", () => {
-  document.querySelector("#form-dialog").close();
-});
-
-const sendForm = async (url, object) => {
-  try {
-    const resp = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(object)
+const generateGamesList = (gamesArray, template, parent) => {
+  gamesArray.forEach(element => {
+    const clone = template.content.cloneNode(true);
+    clone.querySelector('h3').textContent = element.title;
+    clone.querySelector('.text').textContent = element.description;
+    clone.querySelector('.developer').textContent = element.developer;
+    const catlist = clone.querySelector('.categories');
+    element.categories.forEach(category => {
+      const listItem = document.createElement('li');
+      listItem.textContent = category.name;
+      catlist.append(listItem);
     });
-    return resp;
-  } catch (error) {
-    console.log(error);
-  }
+    const voteslist = clone.querySelector('.votes');
+    element.users.forEach(user => {
+      const listItem = document.createElement('li');
+      listItem.textContent = user.username;
+      voteslist.append(listItem);
+    });
+    clone.querySelector('img').src = element.image;
+    clone.querySelector('a').href = element.link;
+    clone.querySelector('a').textContent = element.link;
+    parent.append(clone);
+  });
 };
 
-const submitForm = (() => {
-  const form = document.querySelector(".game-form");
-  form.addEventListener("submit", async e => {
-    e.preventDefault();
-    const data = new FormData(form);
-    const objectToSend = {
-      title: data.get("title"),
-      image: data.get("image"),
-      link: data.get("link"),
-      description: data.get("description")
-    };
-    const resp = await sendForm("/games", objectToSend);
-    if (resp.status !== 200) {
-      form.querySelector(".form__message").classList.add("error");
-      form.querySelector(".form__message").textContent =
-        "Игра с таким именем уже есть";
-      return;
-    }
-    form.querySelector(".form__message").classList.add("success");
-    form.querySelector(".form__message").textContent = "Игра добавлена";
-    const obj = (await resp.json()).updated;
-    createListItem(
-      document.querySelector(".games-list"),
-      obj,
-      document.querySelector("#game-card")
-    );
-    form.reset();
-    document.querySelector("#form-dialog").close();
-    removePlaceholder(".placeholder");
-  });
+(async () => {
+  const gamesArray = await getData('/games');
+  const template = document.querySelector('#game-list-item');
+  const parent = document.querySelector('.games-list');
+  generateGamesList(gamesArray, template, parent);
 })();
 
-const deleteGame = async (url, id) => {
-  try {
-    const response = await fetch(`${url}/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ id })
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+const generateUsersList = (usersArray, template, parent) => {
+  usersArray.forEach(element => {
+    const clone = template.content.cloneNode(true);
+    clone.querySelector('.name').textContent = element.username;
+    clone.querySelector('.email').textContent = element.email;
+    parent.append(clone);
+  });
+}
 
-const submitDelete = async item => {
-  item
-    .querySelector(".delete-game__button")
-    .addEventListener("click", async e => {
-      const id = e.target.parentElement.id.split("-")[1];
-      await deleteGame("/games", id);
-      e.target.parentElement.remove();
-      let hasCards = document.querySelectorAll(".games-list li");
-      if (!hasCards.length) {
-        showPlaceholder(".games-list", "Нет игр в базе данных. Добавьте игру.");
-      }
-    });
-};
+(async () => {
+  const usersArray = await getData('/users');
+  const template = document.querySelector('#user-list-item');
+  const parent = document.querySelector('.users-list');
+  generateUsersList(usersArray, template, parent);
+})();
+
+const generateCategoriesList = (categoriesArray, template, parent) => {
+  categoriesArray.forEach(element => {
+    const clone = template.content.cloneNode(true);
+    clone.querySelector('.name').textContent = element.name;
+    parent.append(clone);
+  });
+}
+
+(async () => {
+  const categoriesArray = await getData('/categories');
+  const template = document.querySelector('#category-list-item');
+  const parent = document.querySelector('.categories-list');
+  generateCategoriesList(categoriesArray, template, parent);
+})();

@@ -1,61 +1,61 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./styles/style.css" />
-  </head>
-  <body>
-    <header class="header">
-      <h1>Админка игр</h1>
-    </header>
-    <main class="box">
-      <div class="add-game">
-        <button class="add-game__button">Добавить игру</button>
-      </div>
-      <ul class="games-list"></ul>
-    </main>
-    <template id="game-card">
-      <a href="" id="" target="_blank" class="game-link">
-        <article class="game-card">
-          <img src="" alt="" class="game-image" />
-          <div class="game__description-container">
-            <h2 class="game-title"></h2>
-            <p class="game-description"></p>
-          </div>
-        </article>
-      </a>
-    </template>
-    <dialog id="form-dialog">
-      <form class="game-form">
-        <div class="game-form__title">
-          <h2>Добавить игру</h2>
-          <button class="close-dialog">Закрыть</button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin</title>
+  <link rel="stylesheet" href="./styles/styles.css">
+</head>
+<body>
+  <section>
+    <h2>Игры</h2>
+    <ul class="games-list"></ul>
+  </section>
+  <section>
+    <h2>Категории</h2>
+    <ul class="categories-list"></ul>
+  </section>
+  <section>
+    <h2>Пользователи</h2>
+    <ul class="users-list"></ul>
+  </section>
+
+  <template id="game-list-item">
+    <li>
+      <article>
+        <img src="" alt="">
+        <div class="description">
+          <h3></h3>
+          <p class="text"></p>
+          <p class="developer"></p>
+          <p class="link">
+            Ссылка: <a href="" target="_blank"></a>
+          </p>
+          <p class="category">Категории:</p>
+          <ul class="categories"></ul>
+          <p class="users">Проголосовали:</p>
+          <ul class="votes"></ul>
         </div>
-        <label class="form__label">
-          <span>Называние</span>
-          <input name="title" required type="text" />
-        </label>
-        <label class="form__label">
-          <span>Ссылка на изображение</span>
-          <input name="image" required type="url" />
-        </label>
-        <label class="form__label">
-          <span>Ссылка на HTML-файл</span>
-          <input name="link" required type="url" />
-        </label>
-        <label class="form__label">
-          <span>Описание</span>
-          <textarea
-            name="description"
-            required
-          ></textarea>
-        </label>
-        <button type="submit">Добавить</button>
-        <span class="form__message"></span>
-      </form>
-    </dialog>
-    <script src="./scripts/script.js"></script>
-  </body>
+      </article>
+    </li>
+  </template>
+
+  <template id="category-list-item">
+    <li>
+      <div>
+        <p class="name"></p>
+      </div>
+    </li>
+  </template>
+
+  <template id="user-list-item">
+    <li>
+      <div>
+        <p class="name"></p>
+        <p class="email"></p>
+      </div>
+    </li>
+  </template>
+  <script src="./scripts/script.js"></script>
+</body>
 </html>
