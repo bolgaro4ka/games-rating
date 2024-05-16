@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://bolgaro4ka.nomoredomainswork.ru/api';
+export const BASE_URL = 'https://bolgaro4ka.nomoredomainswork.ru';
 
 export const endpoints = {
   games: `${BASE_URL}/games`,
