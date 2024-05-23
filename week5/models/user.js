@@ -45,4 +45,12 @@ userSchema.statics.findUserByCredentials = function(email, password) {
   });
 };
 
+// userSchema.statics.findByIdAndUpdate = function(id, data) {
+//   return this.updateOne({ _id: id }, data)
+// }
+
+// userSchema.statics.findByIdAndDelete = function(id) {
+//   return this.deleteOne({ _id: id })
+// }
+
 module.exports = mongoose.model("user", userSchema);

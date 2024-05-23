@@ -22,7 +22,7 @@ const {checkAuth} = require('../middlewares/auth');
 const {sendMe} = require('../controllers/users');
   
   // Обрабатываем GET-запрос с роутом '/categories'
-usersRouter.get('/users', findAllUsers, filterPassword, sendAllUsers);
+usersRouter.get('/users', findAllUsers, sendAllUsers);
 // routes/users.js
 usersRouter.post(
   "/users",
@@ -48,7 +48,7 @@ usersRouter.delete(
   checkAuth,
   deleteUser,
 ); 
-usersRouter.get("/users/:id", findUserById, filterPassword, sendUserById);
+usersRouter.get("/users/:id", findUserById, sendUserById);
 usersRouter.get("/me", checkAuth, sendMe);
 // Экспортируем роут для использования в приложении — app.js
 module.exports = usersRouter;

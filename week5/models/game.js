@@ -7,7 +7,8 @@ const categoryModel = require("./category");
 const gameSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   description: {
     type: String,
@@ -34,7 +35,8 @@ const gameSchema = new mongoose.Schema({
   categories: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: categoryModel // Содержит ссылки на связанные с игрой модели категорий
+      ref: categoryModel,
+      required: true
     }
   ]
 });
