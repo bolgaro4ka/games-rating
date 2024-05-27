@@ -107,7 +107,7 @@ export const vote = async (url, jwt, usersArray) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${jwt}`,
       },
-      body: JSON.stringify({ usersв: usersArray }),
+      body: JSON.stringify({ users: usersArray }),
     })
     if (response.status !== 200) {
       throw new Error('Ошибка голосования')
