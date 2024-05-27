@@ -89,7 +89,7 @@ export default function GamePage(props) {
                 className={`button ${Styles["about__vote-button"]}`}
                 onClick={handleVote}
               >
-                {isVoted ? "Голос учтён" : "Голосовать"}
+                {checkIfUserVoted(game, authContext.user.id) ? "Голос учтён" : "Голосовать"}
               </button>
             </div>
           </section>
