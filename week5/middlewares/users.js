@@ -52,7 +52,7 @@ const createUser = async (req, res, next) => {
 const findUserById = async (req, res, next) => {
   console.log("GET /api/users/:id");
   try {
-    req.user = await users.findById(req.params.id, { password: 0 });
+    req.user = await users.findById(req.params.id);
     next();
   } catch (error) {
     res.status(404).send(`User not found: ${error}`);
