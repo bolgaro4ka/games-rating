@@ -109,9 +109,9 @@ export const vote = async (url, jwt, usersArray) => {
       },
       body: JSON.stringify({ usersв: usersArray }),
     })
-    //if (response.status !== 200) {
-    //  throw new Error('Ошибка голосования')
-    //}
+    if (response.status !== 200) {
+      throw new Error('Ошибка голосования')
+    }
     const result = await response.json()
     return result
   } catch (error) {
