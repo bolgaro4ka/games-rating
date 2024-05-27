@@ -7,11 +7,11 @@ export const useStore = create((set) => ({
     user: null,
     token: null,
     login: (user, token) => {
-        set({ isAuth: true, user: { ...user, id: user._id }, token: jwt });
+        set({ isAuth: true, user: { ...user, id: user._id }, token: jwt }); 
         setJWT(token);
     },
     logout: () => {
-        set({ isAuth: false, user: null, token: null }); 
+        set({ isAuth: false, user: null, token: null });
         removeJWT();
     },
     checkAuth: async () => {
@@ -22,11 +22,11 @@ export const useStore = create((set) => ({
                 set({ isAuth: true, user: { ...user, id: user._id }, token: jwt }); 
               setJWT(jwt);
             } else {
-                set({ isAuth: false, user: { ...user, id: user._id }, token: jwt }); 
+              set({ isAuth: false, user: null, token: null });
               removeJWT();
             }
         } else {
-            set({ isAuth: true, user: null, token: null }); 
+            set({ isAuth: false, user: null, token: null });
         }
     },
 }));
