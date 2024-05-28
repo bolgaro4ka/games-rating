@@ -55,7 +55,7 @@ const findUserById = async (req, res, next) => {
     req.user = await users.findById(req.params.id, { password: 0 });
     next();
   } catch (error) {
-    res.status(404).send("User not found");
+    res.status(404).send(`User not found: ${error}`);
   }
 };
 
